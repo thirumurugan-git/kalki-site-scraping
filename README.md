@@ -1,3 +1,6 @@
+# To install packages
+Run 'pip3 install -r requirements.txt'
+
 # Scrapper tool for kalkionline.com
 
 This is a tool to scrape website kalkionline.com
