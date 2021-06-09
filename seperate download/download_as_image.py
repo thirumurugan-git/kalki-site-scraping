@@ -14,6 +14,8 @@ headers = {"Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,imag
 
 def download_as_image():
 
+    error_images = ""
+
     s = requests.Session()
 
     try:
@@ -50,11 +52,19 @@ def download_as_image():
                 except OSError as exc: # Guard against race condition
                     if exc.errno != errno.EEXIST:
                         raise
-
-            with open(storing_path, 'wb') as f:
-                f.write(img.content)
+        
+            try:
+                with open(storing_path, 'wb') as f:
+                    f.write(img.content)
+            except:
+                print("########### " + url_for_img)
+                error_images += url_for_img + "\n"
         
         print("completed-------", data[keys])
+    
+    with open("error_images.txt",'w') as f:
+        f.write(error_images)
+
     print("========== over all completed ===========")
 
 

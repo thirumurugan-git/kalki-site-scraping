@@ -33,6 +33,8 @@ def get_storing_path(stripped_url):
 
 def download_as_pdf():
 
+    error_images = ""
+
     s = requests.Session()
 
     try:
@@ -67,16 +69,23 @@ def download_as_pdf():
                             print("last site: "+url)
                             quit()
                         max_try_img = 5
-
-            image_bytes = img2pdf.convert(img.content)
-            io_bytes = io.BytesIO(image_bytes)
-            merge.append(io_bytes)
+            try:
+                image_bytes = img2pdf.convert(img.content)
+                io_bytes = io.BytesIO(image_bytes)
+                merge.append(io_bytes)
+            except:
+                print("########### " + url_for_img)
+                error_images += url_for_img + "\n"
 
         path_to_store = get_storing_path(keys)    
         
         merge.write(path_to_store)
         
         print("completed-------", data[keys])
+
+    with open("error_images.txt",'w') as f:
+        f.write(error_images)
+
     print("========== over all completed ===========")
 
 

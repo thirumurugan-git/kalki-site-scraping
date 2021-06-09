@@ -30,6 +30,8 @@ headers = {"Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,imag
 
 def download_as_image():
 
+    error_images = ""
+
     s = requests.Session()
 
     replace_path = "https://www.kalkionline.com/imagegallery/archiveimages/"
@@ -55,7 +57,7 @@ def download_as_image():
     for url in sites_list:
         
         if flag:
-            if not start_from == url:
+            if start_from == url:
                 flag = False
             else:
                 continue
@@ -109,10 +111,18 @@ def download_as_image():
                 except OSError as exc: # Guard against race condition
                     if exc.errno != errno.EEXIST:
                         raise
+            try:
+                with open(storing_path, 'wb') as f:
+                    f.write(img.content)
+            except:
+                print("########### " + url_for_img)
+                error_images += url_for_img + "\n"
 
-            with open(storing_path, 'wb') as f:
-                f.write(img.content)
         print("completed", url)
+
+    with open('error_images.txt', 'w') as f:
+        f.write(error_images)
+
     print('================== over all completed =====================')
 
 def get_storing_path(url):
@@ -130,6 +140,9 @@ def get_storing_path(url):
 
 def download_as_pdf():
     
+
+    error_images = ""
+
     start_from = str(input("Enter From which URL want to start (n for do all else type the URL): "))
     
     try:
@@ -158,7 +171,7 @@ def download_as_pdf():
     for url in sites_list:
         
         if flag:
-            if not start_from == url:
+            if start_from == url:
                 flag = False
             else:
                 continue
@@ -204,16 +217,25 @@ def download_as_pdf():
                             print("last site: "+url)
                             quit()
                         max_try_img = 5
-                    
-            image_bytes = img2pdf.convert(img.content)
-            io_bytes = io.BytesIO(image_bytes)
-            merge.append(io_bytes)
+            try:
+                image_bytes = img2pdf.convert(img.content)
+                io_bytes = io.BytesIO(image_bytes)
+                merge.append(io_bytes)
+            except:
+                print("########### " + url_for_img)
+                error_images += url_for_img + "\n"
 
         path_to_store = get_storing_path(url)    
         
         merge.write(path_to_store)
     
         print("================completed=============== " + path_to_store)
+    
+
+    with open("error_images.txt",'w') as f:
+        f.write(error_images)
+
+
     print('================== over all completed =====================')
 
 if __name__ == "__main__":

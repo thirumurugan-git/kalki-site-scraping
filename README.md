@@ -32,3 +32,11 @@ There is a another option, to download seperately. use 'seperate download' direc
 Then if you want to download as pdf, use 'download_as_pdf' script else use 'download_as_image'.
 
 ***Note Download through single code is preferred.
+
+# Errors for proxy
+If cannot get response, there only be proxy server problem. choose one of the solution.
+
+1. take out proxy from the code
+2. use other proxy server
+
+**Note: proxy-site: http://free-proxy.cz/en/proxylist/country/US/https/uptime/level3
