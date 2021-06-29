@@ -94,6 +94,9 @@ def organizingTechnic(url):
     if "sp" in x:
         return 500+alpha_numeric_page_number(x[2:])
 
+    if "sw" in x:
+        return 1500+alpha_numeric_page_number(x[2:])
+
     if "p" in x:
         return alpha_numeric_page_number(x[1:])
 
