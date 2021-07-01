@@ -53,10 +53,10 @@ def write_in_csv(url):
             obj = writer(f)
             obj.writerow(li)
 
-    data = [name, dir+" magazine "+date, "", "", file, date, year, month, "tam", "ServantsOfKnowledge", "texts", "KalkiOnline", "Magazine", "Tamil Magazine"]
+    data = [name, dir+" magazine "+date, "", "", file, date, year, month, "tam", "ServantsOfKnowledge", "texts", "KalkiOnline", "Magazine;Tamil Magazine"]
     if dir == directory_name[-2]:
         data[8] = "eng"
-        data[-1] = "English Magazine"
+        data[-1] = "Magazine;English Magazine"
 
     with open(csv_file, 'a') as f:
         obj = writer(f)
