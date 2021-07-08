@@ -106,6 +106,9 @@ def organizingTechnic(url):
     if 'a' in x:
         return 2000+alpha_numeric_page_number(x[1:])
 
+    if x[0].isnumeric():
+        return alpha_numeric_page_number(x)
+        
     print("stopped at url (undefined page):" + url)
     print("quiting.....")
     quit()
